@@ -1,0 +1,11 @@
+{
+  "name": "readfile",
+  "version": "1.0.0",
+  "description": "Testr ockh läser en fil",
+  "main": "readfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bo Grus",
+  "license": "ISC"
+}

@@ -1,0 +1,4 @@
+Hej
+
+Detta är en test av FS.ReadFile
+
