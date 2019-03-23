@@ -1,0 +1,14 @@
+{
+  "name": "mysqlplain",
+  "version": "1.0.0",
+  "description": "Demo of a plain MySQL in Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bo Grus",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.16.0"
+  }
+}

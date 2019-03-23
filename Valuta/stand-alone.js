@@ -3,7 +3,7 @@
 */
 
 const fetch = require('node-fetch');
-fetch('https://api.exchangeratesapi.io/latest')
+fetch('https://api.exchangeratesapi.io/latest?base=SEK')
   .then((resp) => resp.json())
   .then(function (data) {
     console.log(data)
