@@ -18,7 +18,7 @@ connection.connect();
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/get', (req, res) => {
     /*
         READ (Get)
     http://localhost:3000?user_id=4
@@ -49,12 +49,7 @@ app.get('/list', (req, res) => {
     
 });
 
-app.get('/get', (req, res) => {
-    console.log(req.body);
-    res.json({"message": "GET"});
-});
-
-app.post('/', urlencodedParser, function (req, res) {
+app.post('/update', urlencodedParser, function (req, res) {
     /*
         Updatera (U)
     {
@@ -93,7 +88,7 @@ app.post('/', urlencodedParser, function (req, res) {
     });
 });
 
-app.put('/', (req, res) => {
+app.put('/insert', (req, res) => {
     /*
         CREATE (Insert)
     {
@@ -120,7 +115,7 @@ app.put('/', (req, res) => {
     });
 })
 
-app.delete('/', function (req, res) {
+app.delete('/delete', function (req, res) {
 
      /*
         Delete
@@ -149,6 +144,31 @@ app.delete('/', function (req, res) {
     }
 })
 
+
+app.post('/login', urlencodedParser, function (req, res) {
+    /*
+        Login (U)
+    {
+        "user_name" : "bosse",
+        "password" : "test"
+    }
+    */
+    sql = `SELECT * FROM users WHERE user_name = "${req.body._user_name}" AND password = "${req.body._password}"`;
+    connection.query(sql, function (error, results, fields) {
+        var reply = {};
+        if (error) {
+            reply.code = "0"; 
+            res.json(reply);
+        } 
+        else if (results.length == 0) {
+            reply.code = "0";
+            res.json(reply);
+        }  
+        else {
+            res.json(results);
+        }   
+    });
+})
 
 // listen on port 3000
 app.listen(3000, () => {
