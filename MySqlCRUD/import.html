@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Rent Me Direct</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+   <!--  <script src="js/helper.js"></script> -->
+</head>
+
+<style>
+    .date {width: 140px}
+</style>
+<body>
+
+    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <span style="font-weight:bold; font-size:20px">Rent Me Direct</span>
+            </a>
+              
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+              
+        <div id="navbar" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Hem
+                </a>
+                <a class="navbar-item" href="import">
+                    Import
+                </a>
+            </div>
+        </div>
+    </nav>
+              
+    <section class="section"> 
+        <div id="main-container" class="container">
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <input class="input" type="file" id="fileUrl" value="Väljs fil:" /><br />
+                        <button class="button is-link" id="eImport">Import</button>
+                        <div id="result"></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>    
+        
+    <script>
+
+        document.getElementById('eImport').onclick = function() {
+            var files = document.getElementById('fileUrl').files;
+            console.log(files);
+            if (files.length <= 0) {
+                return false;
+            }
+            var fr = new FileReader();
+            fr.onload = function(e) { 
+                //fetch("http://localhost:3000/import", { 
+                    fetch("import", { 
+                    method: "POST",
+                    mode: "no-cors",
+                    credentials: "same-origin",
+                    cache: "no-cache",
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8"
+                        //"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+                        //"Content-Type": "text/plain; charset=utf-8"
+                        
+                    },
+                    redirect: "follow",
+                    referrer: "no-referrer",
+                    //body: JSON.stringify(peopleJson)
+                    body: e.target.result
+                    
+                }) 
+
+                .then(function (response) {
+                    return response.json();
+                }) 
+                .then(function (data) {
+                    console.log(data)
+                
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });   
+            }
+            
+            fr.readAsText(files.item(0));
+        };
+
+        /*
+     
+        function getRatesOnDate(date) {
+
+            var param =  {};
+            param._action = "One";
+            param.date = date;
+
+            fetch("http://localhost:5050", { 
+                method: "POST",
+                mode: "cors",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                redirect: "follow",
+                referrer: "no-referrer",
+                body: JSON.stringify(param)
+             }) 
+
+            .then(function (response) {
+                return response.json();
+            }) 
+            .then(function (data) {
+                console.log(data)
+                rates = calculateRates(data);
+                setRatesTable(rates);
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });   
+        }
+
+        function calculateRates(data) {
+            var rates = {};
+            rates.sek = data.rates.SEK * 100;
+            rates.usd = data.rates.USD * 100;
+            rates.eur = data.rates.EUR * 100;
+            rates.gbp = data.rates.GBP * 100;
+            rates.cny = data.rates.CNY * 100;
+            rates.hkd = data.rates.HKD * 100;
+            rates.thb = data.rates.THB * 100;
+            rates.date = data.date;
+            return rates;
+        }
+
+        function setRatesTable(rates) {
+            
+            Helper.setValue('rate_date', rates.date);
+            Helper.setHtml('rate-date', rates.date);
+            Helper.setHtml('rate-sek', rates.sek);
+            Helper.setHtml('rate-usd', rates.usd);
+            Helper.setHtml('rate-eur', rates.eur);
+            Helper.setHtml('rate-gbp', rates.gbp);
+            Helper.setHtml('rate-cny', rates.cny);
+            Helper.setHtml('rate-hkd', rates.hkd);
+            Helper.setHtml('rate-thb', rates.thb);
+        }
+
+        function getLatest() {
+            getRatesOnDate('Latest');
+        }
+        function getOneDate() {
+            var date = Helper.getValue('rate_date');
+            getRatesOnDate(date);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            Helper.onClick('eGetOnDate', getOneDate); 
+            getLatest();
+        });
+        */
+    </script>
+
+
+</body>
+</html>
